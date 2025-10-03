@@ -141,7 +141,7 @@ footer {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio entre elementos */
+    gap: 15px; 
 }
 label {
     font-weight: bold;
