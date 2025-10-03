@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Empresa</title>
+    <!-- Vinculamos el CSS externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bienvenidos a Mi Empresa</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Inicio</a>
+                <a href="{{ url_for('equipo') }}">Nuestro Equipo</a>
+                <a href="{{ url_for('listar_productos') }}">Gestionar Productos</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section id="vision">
+                <h2>Nuestra Visión</h2>
+                <p>Convertirnos en la tienda en línea de referencia en México para la venta de partes y accesorios de computadora, 
+                ofreciendo innovación, confianza y accesibilidad a todos los usuarios.</p>
+            </section>
+
+            <hr>
+
+            <section id="mision">
+                <h2>Nuestra Misión</h2>
+                <p>Brindar a nuestros clientes componentes de calidad, asesoría especializada y una experiencia de compra sencilla 
+                y segura, impulsando la tecnología al alcance de estudiantes, profesionales y empresas.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <hr>
+            <h2>Contacto</h2>
+            <p>Email: david@miempresa.com | Teléfono: +123 456 7890</p>
+        </footer>
+    </div>
+</body>
+</html>

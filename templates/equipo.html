@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuestro Equipo</title>
+    <!-- Enlace al CSS externo -->
+    <link rel="stylesheet" href="{{ url_for('static',
+    filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/">&larr; Volver a la página principal</a>
+        <h1>Nuestro Equipo</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>Cargo</th>
+                </tr>
+            </thead>
+            <tbody>              {% for persona in personas %}            
+                <tr>
+                    <td>{{ persona[0] }}</td>
+                    <td>{{ persona[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
