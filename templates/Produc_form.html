@@ -1,30 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Agregar Producto</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <a href="/">&larr; Volver a la página principal</a>
-        <h1>Agregar Nuevo Producto</h1>
-        
-        <form action="{{ url_for('agregar_producto') }}" method="POST">
-            <div>
-                <label for="nombre">Nombre del Producto:</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
-            <div>
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
-            </div>
-            <div>
-                <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" step="0.01" required>
-            </div>
-            <button type="submit">Guardar Producto</button>
-        </form>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+    Formulario de Producto
+{% endblock %}
+
+{% block content %}
+    <h1>Agregar Nuevo Producto</h1>
+    
+    <a href="{{ url_for('listar_productos') }}">&larr; Volver a la lista</a>
+
+    <form action="{{ url_for('agregar_producto') }}" method="POST">
+        <div>
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4"></textarea>
+        </div>
+        <div>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" step="0.01" required>
+        </div>
+        <button type="submit">Guardar Producto</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Empresa{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bienvenidos a Mi Empresa</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Inicio</a>
+                <a href="{{ url_for('equipo') }}">Nuestro Equipo</a>
+                <a href="{{ url_for('listar_productos') }}">Gestionar Productos</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <hr>
+            <h2>Contacto</h2>
+            <p>Email: david@miempresa.com | Teléfono: +123 456 7890</p>
+            
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="http://validator.w3.org/check?uri=referer" target="_blank">
+                    <img src="https://www.w3.org/Icons/valid-html401" alt="HTML Válido" height="31" width="88" />
+                </a>
+                <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">
+                    <img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

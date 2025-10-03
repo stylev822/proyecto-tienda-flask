@@ -1,41 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Productos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <a href="/">&larr; Volver a la página principal</a>
-        <h1>Nuestros Productos</h1>
+{% extends "base.html" %}
 
-        <a href="{{ url_for('mostrar_formulario_producto') }}" style="display: inline-block; margin-bottom: 20px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px;">
-            + Agregar Nuevo Producto
-        </a>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for producto in productos %}
-                <tr>
-                    <td>{{ producto['nombre'] }}</td>
-                    <td>{{ producto['descripcion'] }}</td>
-                    <td>${{ "%.2f"|format(producto['precio']) }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="3">Aún no hay productos registrados.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+{% block title %}
+    Lista de Productos
+{% endblock %}
+
+{% block content %}
+    <h1>Nuestros Productos</h1>
+
+    <a href="{{ url_for('mostrar_formulario_producto') }}" style="display: inline-block; margin-bottom: 20px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px;">
+        + Agregar Nuevo Producto
+    </a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto['nombre'] }}</td>
+                <td>{{ producto['descripcion'] }}</td>
+                <td>${{ "%.2f"|format(producto['precio']) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Aún no hay productos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
