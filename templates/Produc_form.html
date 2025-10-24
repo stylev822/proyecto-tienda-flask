@@ -9,7 +9,7 @@
     
     <a href="{{ url_for('listar_productos') }}">&larr; Volver a la lista</a>
 
-    <form action="{{ url_for('agregar_producto') }}" method="POST">
+    <form id="form-producto" action="{{ url_for('agregar_producto') }}" method="POST">
         <div>
             <label for="nombre">Nombre del Producto:</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -24,4 +24,38 @@
         </div>
         <button type="submit">Guardar Producto</button>
     </form>
+
+    <script>
+        $(document).ready(function() {
+            // Se activa el plugin en el formulario
+            $("#form-producto").validate({
+                
+                // Definimos las REGLAS de validación
+                rules: {
+                    nombre: {
+                        required: true,
+                        minlength: 3
+                    },
+                    precio: {
+                        required: true,
+                        number: true,
+                        min: 0.01
+                    }
+                },
+                
+                
+                messages: {
+                    nombre: {
+                        required: "Por favor, escribe el nombre del producto",
+                        minlength: "El nombre debe tener al menos 3 caracteres"
+                    },
+                    precio: {
+                        required: "Por favor, introduce un precio",
+                        number: "Por favor, introduce un número válido",
+                        min: "El precio debe ser un valor positivo"
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}

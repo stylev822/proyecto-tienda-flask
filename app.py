@@ -1,18 +1,18 @@
-# app.py (Versión simplificada sin variables de entorno)
+# app.py
 
-from flask import Flask, render_template, request, redirect, url_for, g
+import os
+from flask import Flask, render_template, request, redirect, url_for, g, jsonify
 import psycopg2
 from psycopg2.extras import DictCursor
 
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN DE LA BASE DE DATOS (Directa en el código) ---
-# Aquí ponemos los datos de conexión directamente para simplificar.
 db_config = {
     "host": "localhost",
     "database": "mi_base",
     "user": "postgres",
-    "password": "0503" # ¡Recuerda no subir esto a repositorios públicos!
+    "password": "12345" # ¡Recuerda no subir esto a repositorios públicos!
 }
 
 # --- GESTIÓN DE LA BASE DE DATOS (BUENA PRÁCTICA) ---
@@ -54,7 +54,7 @@ def listar_productos():
     """Muestra la lista de todos los productos."""
     conn = get_db()
     cur = conn.cursor()
-    cur.execute("SELECT id, nombre, descripcion, precio FROM productos ORDER BY id;")
+    cur.execute("SELECT id, nombre, descripcion, precio FROM productos ORDER BY id DESC;")
     lista_de_productos = cur.fetchall()
     cur.close()
     return render_template('productos.html', productos=lista_de_productos)
@@ -62,7 +62,7 @@ def listar_productos():
 @app.route('/productos/nuevo')
 def mostrar_formulario_producto():
     """Muestra el formulario para agregar un nuevo producto."""
-    return render_template('Produc_form.html')
+    return render_template('Produc_form.html') # Asegúrate que el nombre coincida con tu archivo
 
 @app.route('/productos', methods=['POST'])
 def agregar_producto():
@@ -81,6 +81,34 @@ def agregar_producto():
     cur.close()
     
     return redirect(url_for('listar_productos'))
+
+
+# ==============================================
+# == API (RUTAS QUE DEVUELVEN DATOS)            ==
+# ==============================================
+@app.route('/api/productos')
+def api_get_productos():
+    """
+    Devuelve la lista de productos en formato JSON.
+    """
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT id, nombre, descripcion, precio FROM productos ORDER BY id DESC;")
+    productos = cur.fetchall()
+    cur.close()
+    
+    # Convertimos la lista de tuplas/diccionarios a una lista JSON
+    lista_de_productos = [
+        {
+            'id': p['id'],
+            'nombre': p['nombre'],
+            'descripcion': p['descripcion'],
+            'precio': float(p['precio']) # Convertimos el precio a float para JSON
+        } 
+        for p in productos
+    ]
+    
+    return jsonify(lista_de_productos)
 
 
 # --- ARRANQUE DE LA APLICACIÓN ---

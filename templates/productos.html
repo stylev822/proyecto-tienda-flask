@@ -7,9 +7,14 @@
 {% block content %}
     <h1>Nuestros Productos</h1>
 
-    <a href="{{ url_for('mostrar_formulario_producto') }}" style="display: inline-block; margin-bottom: 20px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px;">
-        + Agregar Nuevo Producto
-    </a>
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('mostrar_formulario_producto') }}" style="display: inline-block; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px;">
+            + Agregar Nuevo Producto
+        </a>
+        <button id="btn-actualizar" style="padding: 10px 15px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Actualizar Lista 
+        </button>
+    </div>
     
     <table>
         <thead>
@@ -19,7 +24,7 @@
                 <th>Precio</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tabla-productos-body">
             {% for producto in productos %}
             <tr>
                 <td>{{ producto['nombre'] }}</td>
@@ -33,4 +38,60 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+        // $(document).ready(...) asegura que el código se 
+        // ejecuta solo cuando la página está 100% cargada.
+        $(document).ready(function() {
+            
+            // 1. Evento: Escuchar el clic en el botón
+            $("#btn-actualizar").on("click", function() {
+                
+                console.log("¡Botón presionado! Pidiendo datos...");
+
+                // 2. Elemento Dinámico (AJAX): Pedir datos a nuestra API
+                $.ajax({
+                    url: "/api/productos", // La ruta JSON que creamos en Flask
+                    type: "GET",
+                    success: function(data) {
+                        // 3. Éxito: 'data' es la lista JSON de productos
+                        console.log("Datos recibidos:", data);
+                        
+                        // 4. Elemento Dinámico: Actualizar la tabla
+                        var tablaBody = $("#tabla-productos-body");
+                        
+                        // Primero, vaciamos la tabla
+                        tablaBody.empty();
+
+                        // Segundo, si no hay productos, mostramos un mensaje
+                        if (data.length === 0) {
+                            tablaBody.append('<tr><td colspan="3">Aún no hay productos registrados.</td></tr>');
+                        }
+
+                        // Tercero, recorremos los datos y creamos las filas
+                        $.each(data, function(index, producto) {
+                            // Formateamos el precio
+                            var precioFormateado = parseFloat(producto.precio).toFixed(2);
+                            
+                            // Creamos la nueva fila (tr)
+                            var nuevaFila = '<tr>' +
+                                '<td>' + producto.nombre + '</td>' +
+                                '<td>' + producto.descripcion + '</td>' +
+                                '<td>$' + precioFormateado + '</td>' +
+                            '</tr>';
+                            
+                            // Añadimos la fila a la tabla
+                            tablaBody.append(nuevaFila);
+                        });
+                    },
+                    error: function(error) {
+                        // 5. Error: Si algo falla
+                        console.error("Error al cargar productos:", error);
+                        alert("No se pudo actualizar la lista de productos.");
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

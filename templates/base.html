@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mi Empresa{% endblock %}</title>
-    <link rel="stylesheet" href="https://stylev822.github.io/proyecto-tienda-flask/static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -27,14 +27,20 @@
             <p>Email: david@miempresa.com | Teléfono: +123 456 7890</p>
             
             <p style="text-align: center; margin-top: 20px;">
-                <a href="https://validator.w3.org/#validate_by_input" target="_blank">
+                <a href="http://validator.w3.org/check?uri=referer" target="_blank">
                     <img src="https://www.w3.org/Icons/valid-html401" alt="HTML Válido" height="31" width="88" />
                 </a>
-                <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">
+                <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">
                     <img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
                 </a>
             </p>
         </footer>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
 </body>
 </html>
