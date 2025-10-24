@@ -166,11 +166,3 @@ button {
 button:hover {
     background-color: #218838;
 }
-/* === Estilos para los errores de validación === */
-label.error {
-    color: #dc3545; /* Un color rojo para el error */
-    font-size: 0.9em;
-    font-weight: bold;
-    display: block; /* Para que aparezca en su propia línea */
-    margin-top: 5px;
-}

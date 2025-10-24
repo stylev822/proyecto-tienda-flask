@@ -5,93 +5,83 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Nuestros Productos</h1>
+<div class="container mt-4">
+    <h1 class="mb-3 text-success section-fade">Nuestros Productos</h1>
 
-    <div style="margin-bottom: 20px;">
-        <a href="{{ url_for('mostrar_formulario_producto') }}" style="display: inline-block; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px;">
-            + Agregar Nuevo Producto
-        </a>
-        <button id="btn-actualizar" style="padding: 10px 15px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Actualizar Lista 
-        </button>
-    </div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody id="tabla-productos-body">
-            {% for producto in productos %}
-            <tr>
-                <td>{{ producto['nombre'] }}</td>
-                <td>{{ producto['descripcion'] }}</td>
-                <td>${{ "%.2f"|format(producto['precio']) }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="3">Aún no hay productos registrados.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <a href="{{ url_for('mostrar_formulario_producto') }}" class="btn btn-primary mb-3 section-fade">
+        + Agregar Nuevo Producto
+    </a>
 
-    <script>
-        // $(document).ready(...) asegura que el código se 
-        // ejecuta solo cuando la página está 100% cargada.
-        $(document).ready(function() {
-            
-            // 1. Evento: Escuchar el clic en el botón
-            $("#btn-actualizar").on("click", function() {
-                
-                console.log("¡Botón presionado! Pidiendo datos...");
+    {% if productos|length == 0 %}
+        <div class="alert alert-warning section-fade">
+            Actualmente no hay productos registrados. Agrega uno nuevo ✅
+        </div>
+    {% else %}
+        <table id="tablaProductos" class="table table-striped table-hover section-fade">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto['nombre'] }}</td>
+                    <td>{{ producto['descripcion'] }}</td>
+                    <td>${{ "%.2f"|format(producto['precio']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
 
-                // 2. Elemento Dinámico (AJAX): Pedir datos a nuestra API
-                $.ajax({
-                    url: "/api/productos", // La ruta JSON que creamos en Flask
-                    type: "GET",
-                    success: function(data) {
-                        // 3. Éxito: 'data' es la lista JSON de productos
-                        console.log("Datos recibidos:", data);
-                        
-                        // 4. Elemento Dinámico: Actualizar la tabla
-                        var tablaBody = $("#tabla-productos-body");
-                        
-                        // Primero, vaciamos la tabla
-                        tablaBody.empty();
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".section-fade").addClass("visible");
 
-                        // Segundo, si no hay productos, mostramos un mensaje
-                        if (data.length === 0) {
-                            tablaBody.append('<tr><td colspan="3">Aún no hay productos registrados.</td></tr>');
-                        }
+    // Animación escalonada de filas
+    $("#tablaProductos tbody tr").each(function(i){
+        let row = $(this);
+        setTimeout(function(){
+            row.addClass("visible-row");
+        }, i*100);
+    });
+});
+</script>
 
-                        // Tercero, recorremos los datos y creamos las filas
-                        $.each(data, function(index, producto) {
-                            // Formateamos el precio
-                            var precioFormateado = parseFloat(producto.precio).toFixed(2);
-                            
-                            // Creamos la nueva fila (tr)
-                            var nuevaFila = '<tr>' +
-                                '<td>' + producto.nombre + '</td>' +
-                                '<td>' + producto.descripcion + '</td>' +
-                                '<td>$' + precioFormateado + '</td>' +
-                            '</tr>';
-                            
-                            // Añadimos la fila a la tabla
-                            tablaBody.append(nuevaFila);
-                        });
-                    },
-                    error: function(error) {
-                        // 5. Error: Si algo falla
-                        console.error("Error al cargar productos:", error);
-                        alert("No se pudo actualizar la lista de productos.");
-                    }
-                });
-            });
-        });
-    </script>
+<style>
+.section-fade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+.section-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
+#tablaProductos tbody tr {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+#tablaProductos tbody tr.visible-row {
+    opacity: 1;
+    transform: translateY(0);
+}
+#tablaProductos {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+#tablaProductos tbody tr:hover {
+    background-color: #f0f4c3;
+    transform: scale(1.02);
+    transition: all 0.3s;
+}
+</style>
 {% endblock %}
