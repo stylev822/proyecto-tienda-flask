@@ -11,97 +11,62 @@ body {
 .container {
     max-width: 800px;
     margin: auto;
-    background: #fff;
-    padding: 20px;
+    background: #f4f4f4; /* Ajustado para el nuevo header */
+    padding: 0; /* Ajustado para el nuevo header */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Padding para el contenido principal */
+main {
+    padding: 20px;
 }
 
 h1, h2 {
     color: #0056b3;
 }
 
-/* === Navegación === */
-nav a {
-    margin-right: 15px;
-    color: #0056b3;
-    font-weight: bold;
-    text-decoration: none;
-}
-nav a:hover {
-    text-decoration: underline;
-}
-
-/* === Tablas (para equipo.html) === */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-th {
-    background-color: #0056b3;
-    color: white;
-}
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+/* === Navegación (Versión Mejorada) === */
+header {
+    background-color: #ffffff; /* Fondo blanco para el header */
+    padding: 15px 30px;
+    border-bottom: 2px solid #f0f0f0; /* Una línea sutil de separación */
+    display: flex; /* Usamos Flexbox para alinear todo */
+    justify-content: space-between; /* H1 a la izquierda, nav a la derecha */
+    align-items: center; /* Centra verticalmente */
+    border-radius: 8px 8px 0 0; /* Redondea las esquinas de arriba */
 }
 
-/* === Enlaces generales === */
-a {
-    color: #0056b3;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-/* === Footer === */
-footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
-}
-/* === Estilos generales === */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+/* El H1 dentro del header */
+header h1 {
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    font-size: 1.8em;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* El contenedor de los enlaces */
+nav {
+    display: flex;
+    gap: 10px; /* Espacio entre los "botones" del menú */
 }
 
-h1, h2 {
-    color: #0056b3;
-}
-
-/* === Navegación === */
+/* Los enlaces del menú */
 nav a {
-    margin-right: 15px;
     color: #0056b3;
     font-weight: bold;
     text-decoration: none;
-}
-nav a:hover {
-    text-decoration: underline;
+    padding: 10px 15px; /* Relleno para que parezcan botones */
+    border-radius: 5px; /* Esquinas redondeadas */
+    transition: background-color 0.2s, color 0.2s; /* Animación suave */
 }
 
-/* === Tablas (para equipo.html) === */
+/* El efecto al pasar el ratón */
+nav a:hover {
+    background-color: #0056b3; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    text-decoration: none; /* Quitamos el subrayado */
+}
+
+/* === Tablas (para equipo.html y productos.html) === */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -120,7 +85,7 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* === Enlaces generales === */
+/* === Enlaces generales (para enlaces que no están en el nav) === */
 a {
     color: #0056b3;
     text-decoration: none;
@@ -132,6 +97,7 @@ a:hover {
 /* === Footer === */
 footer {
     margin-top: 20px;
+    padding-bottom: 20px; /* Añadimos padding para que no esté pegado */
     text-align: center;
     font-size: 0.9em;
     color: #666;
@@ -141,7 +107,7 @@ footer {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; 
+    gap: 15px; /* Espacio entre elementos */
 }
 label {
     font-weight: bold;
@@ -149,10 +115,12 @@ label {
 input[type="text"],
 input[type="number"],
 textarea {
+    width: 100%; /* Hacemos que ocupen todo el ancho */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1em;
+    box-sizing: border-box; /* Importante para que el padding no afecte el ancho */
 }
 button {
     padding: 12px;
@@ -166,6 +134,7 @@ button {
 button:hover {
     background-color: #218838;
 }
+
 /* === Estilos para los errores de validación === */
 label.error {
     color: #dc3545; /* Un color rojo para el error */
@@ -173,4 +142,35 @@ label.error {
     font-weight: bold;
     display: block; /* Para que aparezca en su propia línea */
     margin-top: 5px;
+}
+
+/* === Animaciones (de tus plantillas) === */
+.section-fade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+.section-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#tablaProductos tbody tr {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+#tablaProductos tbody tr.visible-row {
+    opacity: 1;
+    transform: translateY(0);
+}
+#tablaProductos {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+#tablaProductos tbody tr:hover {
+    background-color: #f0f4c3;
+    transform: scale(1.02);
+    transition: all 0.3s;
 }
