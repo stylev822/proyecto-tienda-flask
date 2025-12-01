@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Usuario{% endblock %}
+
+{% block content %}
+<div class="auth-container-wrapper">
+    
+    <div class="auth-card section-fade">
+        <h2>Crear Cuenta</h2>
+        
+        <form id="formRegistro" action="{{ url_for('crear_usuario') }}" method="POST">
+            <div>
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" name="username" id="username" placeholder="Elige un nombre único" required minlength="3">
+                <small id="username-feedback" class="text-danger" style="display:none; font-weight: bold; margin-top: 5px;">
+                    ⚠️ Este usuario ya está en uso.
+                </small>
+            </div>
+            
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" id="password" placeholder="Mínimo 6 caracteres" required>
+            </div>
+
+            <div>
+                <label for="role">Rol / Permisos:</label>
+                <select name="role" id="role">
+                    <option value="usuario">Usuario Normal</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+
+            <button type="submit">Registrarme</button>
+        </form>
+
+        <div class="auth-links">
+            ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>
+        </div>
+    </div>
+
+</div>
+
+{% block page_scripts %}
+<script>
+$(document).ready(function() {
+    $(".section-fade").addClass("visible");
+
+    // ------------------------------------------------------
+    // 1. AJAX PARA VERIFICAR USUARIO DUPLICADO
+    // ------------------------------------------------------
+    $("#username").on("blur", function() {
+        var usuarioIngresado = $(this).val();
+
+        if(usuarioIngresado.length > 0) {
+            $.ajax({
+                url: "/api/check_usuario/" + usuarioIngresado,
+                type: "GET",
+                success: function(response) {
+                    if(response.existe) {
+                        // SI EXISTE: Borde rojo y mostrar mensaje
+                        $("#username").css("border-color", "#dc3545"); // Rojo
+                        $("#username-feedback").show();
+                    } else {
+                        // NO EXISTE: Borde normal (o verde) y ocultar mensaje
+                        $("#username").css("border-color", "#28a745"); // Verde
+                        $("#username-feedback").hide();
+                    }
+                }
+            });
+        }
+    });
+
+    // ------------------------------------------------------
+    // 2. VALIDACIÓN DEL FORMULARIO
+    // ------------------------------------------------------
+    $("#formRegistro").validate({
+        rules: {
+            username: { required: true, minlength: 3 },
+            password: { required: true, minlength: 6 }
+        },
+        messages: {
+            username: "Elige un nombre de usuario (mínimo 3 letras)",
+            password: "La contraseña debe tener al menos 6 caracteres"
+        },
+        submitHandler: function(form) {
+            // Protección extra: Si el mensaje de error está visible, no enviar
+            if ($("#username-feedback").is(":visible")) {
+                alert("Por favor elige otro nombre de usuario.");
+                return false;
+            }
+            form.submit();
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% endblock %}

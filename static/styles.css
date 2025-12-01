@@ -1,6 +1,8 @@
-/* === Estilos generales === */
+/* =========================================
+   1. ESTILOS GENERALES
+   ========================================= */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
@@ -9,168 +11,269 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
-    background: #f4f4f4; /* Ajustado para el nuevo header */
-    padding: 0; /* Ajustado para el nuevo header */
+    background: #fff;
+    padding: 0; 
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-/* Padding para el contenido principal */
-main {
-    padding: 20px;
-}
-
-h1, h2 {
+h1, h2, h3 {
     color: #0056b3;
 }
 
-/* === Navegación (Versión Mejorada) === */
-header {
-    background-color: #ffffff; /* Fondo blanco para el header */
-    padding: 15px 30px;
-    border-bottom: 2px solid #f0f0f0; /* Una línea sutil de separación */
-    display: flex; /* Usamos Flexbox para alinear todo */
-    justify-content: space-between; /* H1 a la izquierda, nav a la derecha */
-    align-items: center; /* Centra verticalmente */
-    border-radius: 8px 8px 0 0; /* Redondea las esquinas de arriba */
+main {
+    padding: 30px;
 }
 
-/* El H1 dentro del header */
+/* =========================================
+   2. NAVEGACIÓN (HEADER)
+   ========================================= */
+header {
+    background-color: #ffffff;
+    padding: 15px 30px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 header h1 {
     margin: 0;
-    font-size: 1.8em;
+    font-size: 1.5em;
+    color: #333;
 }
 
-/* El contenedor de los enlaces */
 nav {
     display: flex;
-    gap: 10px; /* Espacio entre los "botones" del menú */
+    gap: 10px;
 }
 
-/* Los enlaces del menú */
 nav a {
-    color: #0056b3;
-    font-weight: bold;
+    color: #555;
+    font-weight: 600;
     text-decoration: none;
-    padding: 10px 15px; /* Relleno para que parezcan botones */
-    border-radius: 5px; /* Esquinas redondeadas */
-    transition: background-color 0.2s, color 0.2s; /* Animación suave */
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-/* El efecto al pasar el ratón */
 nav a:hover {
-    background-color: #0056b3; /* Fondo azul */
-    color: #ffffff; /* Texto blanco */
-    text-decoration: none; /* Quitamos el subrayado */
+    background-color: #0056b3;
+    color: #fff;
+    text-decoration: none;
 }
 
-/* === Tablas (para equipo.html y productos.html) === */
+/* =========================================
+   3. TABLAS (Estilo Profesional)
+   ========================================= */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background-color: white;
 }
+
 th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 15px;
     text-align: left;
+    border-bottom: 1px solid #ddd;
 }
+
 th {
     background-color: #0056b3;
     color: white;
+    font-weight: 500;
 }
+
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f9f9f9;
 }
 
-/* === Enlaces generales (para enlaces que no están en el nav) === */
-a {
-    color: #0056b3;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
+tbody tr {
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-/* === Footer === */
-footer {
-    margin-top: 20px;
-    padding-bottom: 20px; /* Añadimos padding para que no esté pegado */
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
+tbody tr:hover {
+    background-color: #e3f2fd;
+    transform: scale(1.01);
 }
 
-/* === Estilos para Formularios === */
+/* =========================================
+   4. FORMULARIOS (General)
+   ========================================= */
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio entre elementos */
+    gap: 20px;
 }
+
 label {
     font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
 }
+
+/* Estilos para inputs normales fuera de las tarjetas */
 input[type="text"],
 input[type="number"],
+input[type="email"],
 textarea {
-    width: 100%; /* Hacemos que ocupen todo el ancho */
+    width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1em;
-    box-sizing: border-box; /* Importante para que el padding no afecte el ancho */
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
-button {
+
+input:focus, textarea:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+button[type="submit"] {
     padding: 12px;
-    background-color: #28a745; /* Verde */
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
-button:hover {
+
+button[type="submit"]:hover {
     background-color: #218838;
 }
 
-/* === Estilos para los errores de validación === */
+/* Estilos para errores de validación */
 label.error {
-    color: #dc3545; /* Un color rojo para el error */
-    font-size: 0.9em;
-    font-weight: bold;
-    display: block; /* Para que aparezca en su propia línea */
+    color: #dc3545;
+    font-size: 0.85em;
+    font-weight: 600;
     margin-top: 5px;
 }
 
-/* === Animaciones (de tus plantillas) === */
+/* =========================================
+   5. ANIMACIONES
+   ========================================= */
 .section-fade {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
     transition: all 0.8s ease-out;
 }
+
 .section-fade.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-#tablaProductos tbody tr {
+.table-row-fade {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s ease-out;
 }
-#tablaProductos tbody tr.visible-row {
+
+.table-row-fade.visible-row {
     opacity: 1;
     transform: translateY(0);
 }
-#tablaProductos {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+/* =========================================
+   6. FOOTER
+   ========================================= */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    border-top: 1px solid #eee;
 }
-#tablaProductos tbody tr:hover {
-    background-color: #f0f4c3;
-    transform: scale(1.02);
+
+/* =========================================
+   7. ESTILOS ESPECÍFICOS (LOGIN, REGISTRO, EDICIÓN)
+   ========================================= */
+
+/* Centrar el contenido verticalmente */
+.auth-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+/* La tarjeta del formulario */
+.auth-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+}
+
+/* Títulos dentro de la tarjeta */
+.auth-card h1, .auth-card h2 {
+    text-align: center;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+/* Inputs y Textarea dentro de la tarjeta (AQUÍ ESTÁ EL CAMBIO) */
+.auth-card input, 
+.auth-card select,
+.auth-card textarea {
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    padding: 12px 15px;
+    border-radius: 8px;
     transition: all 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit; /* Para que el textarea use la misma letra */
+}
+
+.auth-card input:focus, 
+.auth-card select:focus,
+.auth-card textarea:focus {
+    background-color: #fff;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1);
+    outline: none;
+}
+
+/* Botón de la tarjeta */
+.auth-card button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+}
+
+.auth-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+}
+
+/* Enlaces de ayuda */
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
 }

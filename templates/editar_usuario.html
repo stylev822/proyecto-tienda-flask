@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-primary section-fade">Editar Usuario</h1>
+    
+    <form action="{{ url_for('actualizar_usuario') }}" method="POST" class="section-fade">
+        <input type="hidden" name="id" value="{{ usuario['id'] }}">
+
+        <div class="mb-3">
+            <label for="username">Nombre de Usuario:</label>
+            <input type="text" name="username" class="form-control" value="{{ usuario['username'] }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password">Nueva Contraseña:</label>
+            <input type="password" name="password" class="form-control" placeholder="Dejar en blanco para mantener la actual">
+            <small class="text-muted">Solo llena esto si quieres cambiar la contraseña.</small>
+        </div>
+
+        <div class="mb-3">
+            <label for="role">Rol / Permisos:</label>
+            <select name="role" class="form-control">
+                <option value="usuario" {% if usuario['role'] == 'usuario' %}selected{% endif %}>Usuario Normal</option>
+                <option value="admin" {% if usuario['role'] == 'admin' %}selected{% endif %}>Administrador</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{{ url_for('listar_usuarios') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+<div class="auth-container-wrapper">
+    
+    <div class="auth-card section-fade" style="max-width: 600px;">
+        <h1>Editar Producto</h1>
+        
+        <form action="{{ url_for('actualizar_producto') }}" method="POST">
+            <input type="hidden" name="id" value="{{ producto['id'] }}">
+            
+            <div class="mb-3">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" value="{{ producto['nombre'] }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="descripcion">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" rows="5" required>{{ producto['descripcion'] }}</textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="precio">Precio:</label>
+                <input type="number" name="precio" id="precio" step="0.01" value="{{ producto['precio'] }}" required>
+            </div>
+            
+            <button type="submit">Guardar Cambios</button>
+            
+            <div class="auth-links">
+                <a href="{{ url_for('listar_productos') }}" style="text-decoration: none;">Cancelar y volver</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% block page_scripts %}
+<script>
+$(document).ready(function() {
+    $(".section-fade").addClass("visible");
+});
+</script>
+{% endblock %}
+
+{% endblock %}

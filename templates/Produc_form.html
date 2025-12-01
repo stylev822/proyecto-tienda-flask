@@ -1,46 +1,73 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Formulario del Producto
-{% endblock %}
-
-{% block page_styles %}
-<style>
-</style>
-{% endblock %}
+{% block title %}Formulario del Producto{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="text-info mb-3 section-fade">Agregar Nuevo Producto</h1>
-    
-    <a href="{{ url_for('listar_productos') }}" class="btn btn-outline-secondary mb-3 section-fade">&larr; Volver a la lista</a>
+    <div class="container mt-4">
+        <h1 class="text-info mb-3 section-fade">Agregar Nuevo Producto</h1>
+        
+        <a href="{{ url_for('listar_productos') }}" class="btn btn-outline-secondary mb-3 section-fade">&larr; Volver a la lista</a>
 
-    <form id="formProducto" action="{{ url_for('agregar_producto') }}" method="POST" class="section-fade">
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre del Producto:</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" required minlength="3">
-        </div>
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" class="form-control" rows="4"></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="precio" class="form-label">Precio:</label>
-            <input type="number" id="precio" name="precio" class="form-control" step="0.01" required min="0">
-        </div>
-        <button type="submit" class="btn btn-success">Guardar Producto</button>
-    </form>
-</div>
+        <form id="formProducto" action="{{ url_for('agregar_producto') }}" method="POST" class="section-fade">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre del Producto:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" required minlength="3">
+                <small id="nombre-feedback" class="form-text text-danger" style="display:none;">⚠️ Este nombre ya existe.</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" rows="4"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio:</label>
+                <input type="number" id="precio" name="precio" class="form-control" step="0.01" required min="0">
+            </div>
+            
+            <button type="submit" class="btn btn-success">Guardar Producto</button>
+        </form>
+    </div>
 {% endblock %}
-
 
 {% block page_scripts %}
 <script>
 $(document).ready(function() {
-    // Mostrar secciones al cargar
+    // Animación de entrada
     $(".section-fade").addClass("visible");
 
-    // Validación con jQuery Validation
+    // ------------------------------------------------------
+    // 1. CÓDIGO AJAX (Verificar nombre duplicado)
+    // ------------------------------------------------------
+    $("#nombre").on("blur", function() {
+        var nombreIngresado = $(this).val();
+
+        // Solo verificamos si escribió algo
+        if(nombreIngresado.length > 0) {
+            $.ajax({
+                url: "/api/check_producto/" + nombreIngresado,
+                type: "GET",
+                success: function(response) {
+                    if(response.existe) {
+                        // SI EXISTE: Poner borde rojo y mostrar mensaje
+                        $("#nombre").addClass("is-invalid").removeClass("is-valid");
+                        $("#nombre-feedback").show();
+                        alert("⚠️ Atención: Ya existe un producto con el nombre '" + nombreIngresado + "'.");
+                    } else {
+                        // NO EXISTE: Poner borde verde y ocultar mensaje
+                        $("#nombre").addClass("is-valid").removeClass("is-invalid");
+                        $("#nombre-feedback").hide();
+                    }
+                },
+                error: function() {
+                    console.log("Error al consultar la API");
+                }
+            });
+        }
+    });
+
+
+    // 2. CÓDIGO DE VALIDACIÓN (jQuery Validate)
     $("#formProducto").validate({
         rules: {
             nombre: { required: true, minlength: 3 },
@@ -53,7 +80,11 @@ $(document).ready(function() {
             precio: "El precio debe ser un número positivo"
         },
         submitHandler: function(form) {
-            alert("Producto registrado correctamente ✅");
+            // Opcional: Bloquear envío si el nombre ya existe (check visual)
+            if ($("#nombre").hasClass("is-invalid")) {
+                alert("No puedes guardar un producto con nombre duplicado.");
+                return false;
+            }
             form.submit();
         }
     });

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4 section-fade">Usuarios del Sistema</h1>
+    
+    <a href="{{ url_for('mostrar_formulario_usuario') }}" class="btn btn-success mb-3">
+        + Nuevo Usuario
+    </a>
+
+    <table class="table table-striped section-fade">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario['id'] }}</td>
+                <td>{{ usuario['username'] }}</td>
+                <td>
+                    <span class="badge bg-{{ 'danger' if usuario['role'] == 'admin' else 'info' }}">
+                        {{ usuario['role'] }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ url_for('editar_usuario', id=usuario['id']) }}" class="btn btn-sm btn-warning">
+                        Editar
+                    </a>
+                    
+                    <a href="{{ url_for('eliminar_usuario', id=usuario['id']) }}" 
+                    class="btn btn-sm btn-danger"
+                    onclick="return confirm('¿Seguro que quieres eliminar este usuario?');">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
